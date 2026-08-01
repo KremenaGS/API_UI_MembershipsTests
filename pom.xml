@@ -51,12 +51,11 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Selenium -->
+        <!-- Source: https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>${selenium.version}</version>
-            <scope>test</scope>
+            <version>4.44.0</version>
         </dependency>
 
         <!-- WebDriverManager -->
