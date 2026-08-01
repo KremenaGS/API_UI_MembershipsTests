@@ -57,8 +57,8 @@ public class MembersPageTest extends BaseUiTest {
         // Step 5: Validate exactly 2 results are displayed
         int resultCount = getGridResultCount();
         assertThat(resultCount)
-            .as("Expected exactly 2 members with name containing 'zara', but found %d", resultCount)
-            .isEqualTo(2);
+                .as("Expected exactly 2 members with name containing 'zara', but found %d", resultCount)
+                .isEqualTo(2);
     }
 
     // ==================== STEP METHODS ====================
@@ -75,8 +75,8 @@ public class MembersPageTest extends BaseUiTest {
         // Verify we're on the login page
         String currentUrl = driver.getCurrentUrl();
         assertThat(currentUrl)
-            .as("Should be on login page")
-            .contains("login");
+                .as("Should be on login page")
+                .contains("login");
     }
 
     /**
@@ -100,9 +100,9 @@ public class MembersPageTest extends BaseUiTest {
         // Wait for navigation to dashboard/members page
         // Using multiple conditions for robustness
         wait.until(ExpectedConditions.or(
-            ExpectedConditions.urlContains("/admin/"),
-            ExpectedConditions.presenceOfElementLocated(USER_MENU),
-            ExpectedConditions.urlContains("/members")
+                ExpectedConditions.urlContains("/admin/"),
+                ExpectedConditions.presenceOfElementLocated(USER_MENU),
+                ExpectedConditions.urlContains("/members")
         ));
 
         // Small buffer for any post-login redirects
@@ -121,9 +121,9 @@ public class MembersPageTest extends BaseUiTest {
 
         // Wait for the page to load - look for grid or filter elements
         wait.until(ExpectedConditions.or(
-            ExpectedConditions.presenceOfElementLocated(FILTER_NAME_INPUT),
-            ExpectedConditions.presenceOfElementLocated(GRID_ROWS),
-            ExpectedConditions.presenceOfElementLocated(By.cssSelector(".members-page, [data-testid='members-page']"))
+                ExpectedConditions.presenceOfElementLocated(FILTER_NAME_INPUT),
+                ExpectedConditions.presenceOfElementLocated(GRID_ROWS),
+                ExpectedConditions.presenceOfElementLocated(By.cssSelector(".members-page, [data-testid='members-page']"))
         ));
 
         // Wait for any loading indicators to disappear
@@ -136,7 +136,7 @@ public class MembersPageTest extends BaseUiTest {
     private void applyNameFilter(String filterValue) {
         // Find and interact with the name filter input
         WebElement nameFilter = wait.until(
-            ExpectedConditions.elementToBeClickable(FILTER_NAME_INPUT)
+                ExpectedConditions.elementToBeClickable(FILTER_NAME_INPUT)
         );
 
         nameFilter.clear();
@@ -176,20 +176,20 @@ public class MembersPageTest extends BaseUiTest {
 
         // Filter out header rows or empty rows if necessary
         int count = (int) rows.stream()
-            .filter(row -> row.isDisplayed())
-            .filter(row -> !row.getAttribute("class").contains("header"))
-            .filter(row -> !row.getAttribute("class").contains("empty"))
-            .filter(row -> row.findElements(By.cssSelector("td, .ag-cell")).size() > 0)
-            .count();
+                .filter(row -> row.isDisplayed())
+                .filter(row -> !row.getAttribute("class").contains("header"))
+                .filter(row -> !row.getAttribute("class").contains("empty"))
+                .filter(row -> row.findElements(By.cssSelector("td, .ag-cell")).size() > 0)
+                .count();
 
         // If no rows found with primary selector, try alternative
         if (count == 0) {
             List<WebElement> altRows = driver.findElements(By.cssSelector(
-                ".members-grid tbody tr, .react-grid-row, [role='row']:not([role='rowheader'])"
+                    ".members-grid tbody tr, .react-grid-row, [role='row']:not([role='rowheader'])"
             ));
             count = (int) altRows.stream()
-                .filter(WebElement::isDisplayed)
-                .count();
+                    .filter(WebElement::isDisplayed)
+                    .count();
         }
 
         return count;
